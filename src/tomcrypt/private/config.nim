@@ -5,22 +5,22 @@ template currentSourceDir(): string =
     parentDir(currentSourcePath())
 
 when not defined(tomcryptPrefix):
-    const tomcryptPrefix = currentSourceDir()
+    const tomcryptPrefix* = currentSourceDir()
 
-when not defined(tomcryptIncPath):
-    const tomcryptIncPath = tomcryptPrefix / "include"
-
-when defined(vcc):
-    {.passC:"/I" & tomcryptIncPath.}
-else:
-    {.passC:"-I" & tomcryptIncPath.}
-
-when not defined(tomcryptLibPath):
-    const tomcryptLibPath = tomcryptPrefix / "lib"
+when not defined(tomcryptIncDir):
+    const tomcryptIncDir* = tomcryptPrefix / "include"
 
 when defined(vcc):
-    const libraryPath = tomcryptLibPath / "tomcrypt.lib"
+    {.passC:"/I" & tomcryptIncDir.}
 else:
-    const libraryPath = tomcryptLibPath / "libtomcrypt.a"
+    {.passC:"-I" & tomcryptIncDir.}
 
-{.passL:libraryPath.}
+when not defined(tomcryptLibDir):
+    const tomcryptLibDir* = tomcryptPrefix / "lib"
+
+when defined(vcc):
+    const tomcryptLibPath* = tomcryptLibDir / "tomcrypt.lib"
+else:
+    const tomcryptLibPath* = tomcryptLibDir / "libtomcrypt.a"
+
+{.passL:tomcryptLibPath.}
