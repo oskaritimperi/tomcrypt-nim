@@ -46,7 +46,7 @@ proc mem_neq*(a: pointer; b: pointer; len: csize): cint {.importc: "mem_neq".}
 proc zeromem*(dst: pointer; len: csize) {.importc: "zeromem".}
 proc burn_stack*(len: culong) {.importc: "burn_stack".}
 proc error_to_string*(err: cint): cstring {.importc: "error_to_string".}
-var crypt_build_settings* {.importc: "crypt_build_settings".}: cstring
+var crypt_build_settings* {.importc: "crypt_build_settings", header:"tomcrypt.h".}: cstring
 
 ##  ---- HMM ----
 
@@ -77,7 +77,7 @@ proc adler32_test*(): cint {.importc: "adler32_test".}
 
 type
   crc32_state* {.bycopy.} = object
-    crc*: uint32
+    crc*: ulong32
 
 proc crc32_init*(ctx: ptr crc32_state) {.importc: "crc32_init".}
 proc crc32_update*(ctx: ptr crc32_state; input: ptr cuchar; length: culong) {.

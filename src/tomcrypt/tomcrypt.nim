@@ -34,3 +34,7 @@ type
        CRYPT_INVALID_PRIME_SIZE, # Invalid size of prime requested
        CRYPT_PK_INVALID_PADDING, # Invalid padding on input
        CRYPT_HASH_OVERFLOW       # Hash applied to too many bits
+
+include cfg
+include cipher
+include misc
